@@ -1,0 +1,25 @@
+@import "./packages-swiper";
+@import "./swiper";
+@import "./transitions";
+@import "./tooltip";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+#primary-navigation-nav .router-link-exact-active,
+#primary-navigation-nav .router-link-exact-active span {
+	@apply text-wz-dark-orange;
+}
+
+.text-shadow {
+	text-shadow: 0 1px 1px rgba(39, 39, 39, 0.32);
+}
+
+.text-shadow-md {
+	text-shadow: 0 3px 0px rgba(39, 39, 39, 0.16);
+}
+
+.text-shadow-lg {
+	text-shadow: 0 3px 6px rgba(39, 39, 39, 0.16);
+}

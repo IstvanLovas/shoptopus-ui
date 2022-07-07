@@ -1,0 +1,29 @@
+:root {
+    --swiper-pagination-bullet-size: 16px;
+    --swiper-pagination-bullet-horizontal-gap: 6px;
+    --swiper-pagination-bullet-inactive-opacity: 1;
+    --swiper-pagination-bullet-inactive-color: #f1f1f1;
+    --swiper-pagination-bullet-opacity: 1;
+    --swiper-pagination-color: transparent;
+}
+
+.swiper-pagination-bullets.swiper-pagination-horizontal {
+    position: relative !important;
+    bottom: 1px !important;
+    left: auto !important;
+}
+
+.swiper-pagination-bullet-active {
+    width: 21px !important;
+    height: 21px !important;
+    border: 1px solid #F1F1F1;
+}
+
+.swiper-horizontal>.swiper-scrollbar {
+    cursor: pointer;
+    background: rgba(255, 138, 118, .25);
+}
+
+.swiper-horizontal>.swiper-scrollbar .swiper-scrollbar-drag {
+    background: #FF8A76;
+}

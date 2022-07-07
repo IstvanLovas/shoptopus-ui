@@ -1,0 +1,19 @@
+version: '3.7'
+services:
+  ui:
+    container_name: "shoptopus_ui_client_1_ui"
+    build:
+      context: .
+      dockerfile: "./provision/ubuntu/Dockerfile.ubuntu"
+    working_dir: /var/www/app
+    restart: unless-stopped
+    ports:
+      - 3000:80
+    volumes:
+      - ./code:/var/www/app
+    networks:
+      - shoptopus_ui_dev
+networks:
+  shoptopus_ui_dev:
+      driver: bridge
+      name: shoptopus_ui_dev
