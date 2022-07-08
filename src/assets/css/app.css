@@ -1,7 +1,7 @@
-@import "./packages-swiper";
-@import "./swiper";
-@import "./transitions";
-@import "./tooltip";
+@import "packages-swiper.css";
+@import "swiper.css";
+@import "transitions.css";
+@import "tooltip.css";
 
 @tailwind base;
 @tailwind components;

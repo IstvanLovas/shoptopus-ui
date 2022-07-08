@@ -1,19 +1,18 @@
-version: '3.7'
-services:
-  ui:
-    container_name: "shoptopus_ui_client_1_ui"
-    build:
-      context: .
-      dockerfile: "./provision/ubuntu/Dockerfile.ubuntu"
-    working_dir: /var/www/app
-    restart: unless-stopped
-    ports:
-      - 3000:80
-    volumes:
-      - ./code:/var/www/app
-    networks:
-      - shoptopus_ui_dev
+version: '3'
+
 networks:
-  shoptopus_ui_dev:
-      driver: bridge
-      name: shoptopus_ui_dev
+  laravel:
+
+services:
+  npm:
+    image: node:13.7
+    container_name: npm
+    volumes:
+      - ./:/var/www/html
+    ports:
+      - 3000:3000
+      - 3001:3001
+    working_dir: /var/www/html
+    entrypoint: ['npm']
+    networks:
+      - laravel

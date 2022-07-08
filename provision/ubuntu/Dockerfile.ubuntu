@@ -1,7 +1,0 @@
-FROM winzum/ubuntu-node-nginx-base:linux_amd64-vlatest
-
-USER root
-
-# Expose ports and run supervisor
-EXPOSE 80 443
-CMD ["/usr/bin/supervisord"]
