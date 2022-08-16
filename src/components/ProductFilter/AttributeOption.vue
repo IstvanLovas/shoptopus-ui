@@ -2,7 +2,11 @@
 	<div class="attribute-option-container">
 		<input class="peer absolute invisible checkbox-input" :id="getId" type="checkbox" v-model="selected" />
 
-		<label v-if="type === 'text'" class="group flex cursor-pointer select-none p-2 rounded-lg overflow-hidden transition duration-300 hover:bg-wz-light-blue checkbox" :for="getId">
+		<label
+			v-if="type === 'text'"
+			:for="getId"
+			class="group flex cursor-pointer select-none p-2 rounded-lg overflow-hidden transition duration-300 hover:bg-wz-light-blue checkbox"
+		>
 			<span class="relative shrink-0 w-[18px] h-[18px] rounded-[4px] border border-wz-grey align-middle transform-gpu transition duration-300 group-hover:border-wz-blue">
 				<svg class="absolute top-[3px] left-[2px] transition-all duration-300" width="12px" height="10px" fill="none" stroke="#fff" stroke-dasharray="16px" stroke-dashoffset="16px">
 					<use xlink:href="#symbol-check"></use>
@@ -42,8 +46,7 @@
 
 		data() {
 			return {
-				selected: false,
-				cachedClearAllCount: 0
+				selected: false
 			}
 		},
 
