@@ -22,6 +22,7 @@
 											type="color"
 											:option="attribute_option"
 											:active="isSelected(attribute_option.id)"
+											:available="colorAttributes.available"
 											@toggled="onOptionToggled(attribute_option.id)"
 										/>
 									</li>
@@ -36,6 +37,7 @@
 										<attribute-option-button
 											:option="attribute_option"
 											:active="isSelected(attribute_option.id)"
+											:available="sizeAttributes.available"
 											@toggled="onOptionToggled(attribute_option.id)"
 										/>
 									</li>
@@ -52,6 +54,7 @@
 												<attribute-option-button
 													:option="attribute_option"
 													:active="isSelected(attribute_option.id)"
+													:available="attr.available"
 													@toggled="onOptionToggled(attribute_option.id)"
 												/>
 											</li>
@@ -123,8 +126,7 @@
 				favorited: false,
 				favoriting: false,
 				loading: false,
-				selectedAttributes: [],
-				//productVariants: []
+				selectedAttributeOptions: [],
 			}
 		},
 
@@ -142,8 +144,10 @@
 			getProductVariantsAttributes() {
 				let attributes = []
 
-				this.product.product_variants.forEach(varian => {
-					varian.product_attributes.forEach(attr => {
+				this.product.product_variants.forEach(vrnt => {
+					let variant = this.setIsAvailable(vrnt)
+
+					variant.product_attributes.forEach(attr => {
 						attributes.push(attr)
 					})
 				})
@@ -202,7 +206,7 @@
 				}
 			},
 
-			//selectedAttributes: 'getProductVariant'
+			//selectedAttributeOptions: 'filterAvailableOptions'
 		},
 
 		mounted() {
@@ -210,54 +214,44 @@
 		},
 
 		methods: {
-			// normalizeFilterAttributes() {
-			// 	// variant attribute optiosn ...
-			// },
+			setIsAvailable(variant) {
+				let variant_attributes = variant.product_attributes
+				let variant_attribute_options = [...new Set(variant_attributes.map(attr => {
+					return attr.options.map(opt => {
+						return opt.id
+					})
+				}))].reduce((acc, val) => acc.concat(val), [])
 
-			// getProductVariant() {
-			// 	if (!this.selectedAttributes.length) {
-			// 		this.productVariants = []
+				if (this.selectedAttributeOptions.length > 0) {
+					variant.available = this.selectedAttributeOptions.every(value => {
+						console.log(variant.id, this.selectedAttributeOptions, variant_attribute_options)
+						return variant_attribute_options.includes(value)
+					})
+				} else {
+					variant.available = true
+				}
 
-			// 		return
-			// 	}
+				return variant
+			},
 
-			// 	this.loading = true
-
-			// 	axios.get(`products?options=${this.selectedAttributes.join(',')}`)
-			// 		.then(response => {
-			// 			if (response.data.data.length > 0) {
-			// 				this.productVariants = response.data.data.map(product => {
-			// 					if (product.id !== this.product.id) {
-			// 						return new ProductModel(product)
-			// 					}
-			// 				})
-			// 			} else {
-			// 				this.productVariants = []
-			// 			}
-			// 		})
-			// 		.then(() => this.normalizeFilterAttributes())
-			// 		.catch(err => this.$emit('flash-message', { message: err.response.data.user_message ?? this.fallbackErrorMessage,level: 'danger' }))
-			// 		.finally(() => this.loading = false)
+			// filterAvailableOptions() {
+			// 	//
 			// },
 
 			onOptionToggled(optionId) {
-				if (this.inArray(optionId, this.selectedAttributes)) {
-					for(let i = 0; i < this.selectedAttributes.length; i++){ 
-	                    if (this.selectedAttributes[i] === optionId) {
-	                        this.selectedAttributes.splice(i, 1)
+				if (this.inArray(optionId, this.selectedAttributeOptions)) {
+					for(let i = 0; i < this.selectedAttributeOptions.length; i++){ 
+	                    if (this.selectedAttributeOptions[i] === optionId) {
+	                        this.selectedAttributeOptions.splice(i, 1)
 	                    }
 	                }
 				} else {
-					this.selectedAttributes.push(optionId)
+					this.selectedAttributeOptions.push(optionId)
 				}
 			},
 
 			isSelected(optionId) {
-				return this.selectedAttributes.includes(optionId)
-			},
-
-			isDisabled() {
-				// Filter attributes and options 
+				return this.selectedAttributeOptions.includes(optionId)
 			},
 
 			favorite() {

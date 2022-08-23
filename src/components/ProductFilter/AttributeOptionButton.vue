@@ -1,7 +1,7 @@
 <template>
 	<button
 		type="button"
-		:class="[buttonBaseClasses, buttonActiveStateClasses]"
+		:class="[buttonBaseClasses, buttonActiveStateClasses, { 'opacity-50' : !available }]"
 		:title="getButtonText"
 		:style="buttonStyle"
 		v-text="getButtonText"
@@ -20,6 +20,10 @@
 
 			active: {
 				default: false
+			},
+
+			available: {
+				default: true
 			},
 
 			type: {
